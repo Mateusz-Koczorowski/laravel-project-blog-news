@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\AdminDashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,4 +48,13 @@ Route::middleware(['auth', 'role:Reader'])->group(function () {
     Route::get('/reader', function () {
         return 'Welcome, Reader!';
     });
+});
+
+Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/create', [AdminDashboardController::class, 'create'])->name('create');
+    Route::post('/store', [AdminDashboardController::class, 'store'])->name('store');
+    Route::get('/edit/{user}', [AdminDashboardController::class, 'edit'])->name('edit');
+    Route::put('/update/{user}', [AdminDashboardController::class, 'update'])->name('update');
+    Route::delete('/delete/{user}', [AdminDashboardController::class, 'destroy'])->name('destroy');
 });
