@@ -7,6 +7,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Subscription;
 
 class AdminDashboardController extends Controller
 {
@@ -14,7 +15,9 @@ class AdminDashboardController extends Controller
     {
         $users = User::paginate(10); // Dodano paginację
         $articles = Article::with('author')->paginate(10); // Dodano paginację i ładowanie relacji
-        return view('admin.dashboard', compact('users', 'articles'));
+        $subscriptions = Subscription::latest()->paginate(10);
+
+        return view('admin.dashboard', compact('users', 'articles', 'subscriptions'));
     }
 
     public function create()
@@ -147,5 +150,21 @@ class AdminDashboardController extends Controller
         $article->delete();
 
         return redirect()->route('admin.dashboard')->with('success', 'Article deleted successfully.');
+    }
+
+    // Approve a subscription
+    public function approveSubscription(Subscription $subscription)
+    {
+        $subscription->update(['status' => 'approved']);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Subscription approved successfully.');
+    }
+
+    // Reject a subscription
+    public function rejectSubscription(Subscription $subscription)
+    {
+        $subscription->update(['status' => 'rejected']);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Subscription rejected successfully.');
     }
 }

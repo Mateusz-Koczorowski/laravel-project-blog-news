@@ -33,6 +33,12 @@
                             </x-nav-link>
                         </div>
                     @endif
+
+                    @if(Auth::check() && Auth::user()->isReader())
+                        <x-nav-link :href="route('subscriptions.index')" :active="request()->routeIs('subscriptions.index')">
+                            {{ __('Purchase Subscription') }}
+                        </x-nav-link>
+                    @endif
                 @endif
             </div>
 
@@ -108,6 +114,12 @@
                     <x-responsive-nav-link :href="route('author.dashboard')" :active="request()->routeIs('author.dashboard')">
                         {{ __('Author Dashboard') }}
                     </x-responsive-nav-link>
+                @endif
+
+                @if(Auth::check() && Auth::user()->isReader())
+                        <x-nav-link :href="route('subscriptions.index')" :active="request()->routeIs('subscriptions.index')">
+                            {{ __('Purchase Subscription') }}
+                        </x-nav-link>
                 @endif
             @endif
         </div>

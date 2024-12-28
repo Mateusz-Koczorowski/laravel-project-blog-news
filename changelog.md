@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.4] - 2024-12-28
+
+- Implement subscription model and controller
+- Implement payment model and acceptance 
+
 ## [0.0.3] - 2024-12-28
 
 - Implemented Article model and controller

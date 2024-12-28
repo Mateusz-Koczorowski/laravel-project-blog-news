@@ -95,8 +95,8 @@ class ArticleController extends Controller
     }
 
     public function authorDashboard()
-{
-    $articles = Article::where('author_id', auth()->id())->paginate(10);
-    return view('author.dashboard', compact('articles'));
-}
+    {
+        $articles = Article::where('author_id', auth()->id())->paginate(10);
+        return view('author.dashboard', compact('articles'));
+    }
 }

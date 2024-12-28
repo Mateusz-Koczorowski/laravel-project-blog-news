@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Subscription;
+
 
 class User extends Authenticatable
 {
@@ -67,4 +69,33 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class, 'author_id');
     }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function hasActiveSubscription()
+    {
+        return $this->subscriptions()
+            ->where('status', 'approved')
+            ->where('end_date', '>=', now())
+            ->exists();
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            if (in_array($user->role, ['Admin', 'Author'])) {
+                Subscription::create([
+                    'user_id' => $user->id,
+                    'start_date' => now(),
+                    'end_date' => now()->addYear(),
+                    'price' => 0.00,
+                    'status' => 'approved',
+                ]);
+            }
+        });
+    }
+
 }
