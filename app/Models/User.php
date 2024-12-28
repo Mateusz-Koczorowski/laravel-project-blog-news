@@ -63,4 +63,8 @@ class User extends Authenticatable
         return $this->role === self::ROLE_READER;
     }
     
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'author_id');
+    }
 }

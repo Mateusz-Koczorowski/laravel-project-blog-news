@@ -2,6 +2,13 @@
 
 ## [0.0.3] - 2024-12-28
 
+- Implemented Article model and controller
+- Implemented Article image 
+- Implemented Article CRUD for Author Dashboard
+- Implemented Author Dashboard 
+- Implemented Article CRUD for Admin Dashboard
+- to enable images use php artisan storage:link
+
 ### Added
 - Admin dashboard route with users management
 
