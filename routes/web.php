@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AuthorArticleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,4 +59,21 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/edit/{user}', [AdminDashboardController::class, 'edit'])->name('edit');
     Route::put('/update/{user}', [AdminDashboardController::class, 'update'])->name('update');
     Route::delete('/delete/{user}', [AdminDashboardController::class, 'destroy'])->name('destroy');
+
+     // Article management
+     Route::get('/create-article', [AdminDashboardController::class, 'createArticle'])->name('create-article');
+     Route::post('/store-article', [AdminDashboardController::class, 'storeArticle'])->name('store-article');
+     Route::get('/edit-article/{article}', [AdminDashboardController::class, 'editArticle'])->name('edit-article');
+     Route::put('/update-article/{article}', [AdminDashboardController::class, 'updateArticle'])->name('update-article');
+     Route::delete('/delete-article/{article}', [AdminDashboardController::class, 'destroyArticle'])->name('delete-article');
 });
+
+Route::resource('articles', ArticleController::class)->middleware('auth');
+
+Route::middleware(['auth', 'role:Author'])->prefix('author')->name('author.')->group(function () {
+    Route::get('/dashboard', [ArticleController::class, 'authorDashboard'])->name('dashboard');
+    Route::resource('articles', ArticleController::class)->except(['index', 'show']);
+});
+
+Route::get('/', [ArticleController::class, 'index'])->name('home');
+Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
