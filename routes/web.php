@@ -6,7 +6,7 @@ use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\AuthorArticleController;
+use App\Http\Controllers\SubscriptionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -77,3 +77,19 @@ Route::middleware(['auth', 'role:Author'])->prefix('author')->name('author.')->g
 
 Route::get('/', [ArticleController::class, 'index'])->name('home');
 Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+
+Route::middleware(['auth', 'role:Reader'])->prefix('subscriptions')->name('subscriptions.')->group(function () {
+    Route::get('/', [SubscriptionController::class, 'index'])->name('index');
+    Route::get('/select-dates', [SubscriptionController::class, 'selectDates'])->name('select-dates');
+    Route::post('/create', [SubscriptionController::class, 'create'])->name('create');
+    Route::post('/store', [SubscriptionController::class, 'store'])->name('store');
+    Route::post('/summary', [SubscriptionController::class, 'summary'])->name('summary');
+    Route::get('/thank-you', [SubscriptionController::class, 'thankYou'])->name('thank-you');
+});
+
+
+Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/subscriptions/{subscription}/approve', [AdminDashboardController::class, 'approveSubscription'])->name('subscriptions.approve');
+    Route::post('/subscriptions/{subscription}/reject', [AdminDashboardController::class, 'rejectSubscription'])->name('subscriptions.reject');
+});
