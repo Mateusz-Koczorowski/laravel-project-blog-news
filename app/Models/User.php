@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ROLE_ADMIN = 'Admin';
+    const ROLE_AUTHOR = 'Author';
+    const ROLE_READER = 'Reader';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', // Dodajemy pole role
     ];
 
     /**
@@ -42,4 +47,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function isAdmin()
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isAuthor()
+    {
+        return $this->role === self::ROLE_AUTHOR;
+    }
+
+    public function isReader()
+    {
+        return $this->role === self::ROLE_READER;
+    }
+    
 }
