@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.0.4] - 2024-12-29
+
+- Implement liking posts
 ## [0.0.4] - 2024-12-28
 
 - Implement subscription model and controller
