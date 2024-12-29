@@ -45,6 +45,42 @@
                             @endif
                         </div>
                     @endif
+                    <div id="like-section" class="mt-6 flex items-center">
+                        <div id="like-icon-wrapper" class="rounded-full p-2 transition-all duration-300">
+                            <img id="like-icon" 
+                                 src="{{ $article->isLikedBy(auth()->user()) ? asset('icons/liked.png') : asset('icons/like.png') }}" 
+                                 class="like-button">
+                        </div>
+                        <span id="likes-count" class="ml-2">{{ $article->likes->count() }}</span>
+                    </div>
+                    
+                    <script>
+                        const likeIconWrapper = document.getElementById('like-icon-wrapper');
+                        const likeIcon = document.getElementById('like-icon');
+                        const likesCount = document.getElementById('likes-count');
+                    
+                        likeIcon.addEventListener('click', function () {
+                            fetch('{{ route('articles.like', $article->id) }}', {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Content-Type': 'application/json',
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                likesCount.textContent = data.likes_count;
+                    
+                                // Update the icon based on like status
+                                if (data.status === 'liked') {
+                                    likeIcon.src = '{{ asset('icons/liked.png') }}';
+                                } else {
+                                    likeIcon.src = '{{ asset('icons/like.png') }}';
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                        });
+                    </script>
                 </div>
             </div>
         </div>

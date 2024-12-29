@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\LikeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -92,4 +93,8 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::post('/subscriptions/{subscription}/approve', [AdminDashboardController::class, 'approveSubscription'])->name('subscriptions.approve');
     Route::post('/subscriptions/{subscription}/reject', [AdminDashboardController::class, 'rejectSubscription'])->name('subscriptions.reject');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/articles/{article}/like', [LikeController::class, 'toggle'])->name('articles.like');
 });
