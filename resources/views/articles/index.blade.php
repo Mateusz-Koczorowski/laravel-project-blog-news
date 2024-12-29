@@ -21,8 +21,14 @@
                             By {{ $article->author->name ?? 'Unknown' }} on {{ $article->release_date->format('M d, Y') }}
                         </p>
                         <div class="flex items-center mt-4">
-                            <img src="{{ asset('icons/liked.png') }}" alt="Liked Icon" class="w-5 h-5">
-                            <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ $article->likes->count() }}</span>
+                            <div class="flex items-center mr-4" style="margin-right: 1rem;">
+                                <img src="{{ asset('icons/liked.png') }}" class="w-6 h-6" style="margin-right: 0.5rem;">
+                                <span class="ml-2">{{ $article->likes->count() }}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="{{ asset('icons/comment.png') }}" class="w-6 h-6" style="margin-right: 0.5rem;">
+                                <span class="ml-2">{{ $article->comments->count() }}</span>
+                            </div>
                         </div>
                       </div>
                   </div>
