@@ -81,7 +81,37 @@
                             .catch(error => console.error('Error:', error));
                         });
                     </script>
-                </div>
+                    <div class="mt-8">
+                        <h3 class="text-lg font-bold">Comments ({{ $article->comments->count() }})</h3>
+
+                        @foreach ($article->comments as $comment)
+                            <div class="mt-4 p-4 bg-gray-100 rounded">
+                                <p class="text-sm text-gray-600">
+                                    <strong>{{ $comment->user->name }}</strong> - {{ $comment->created_at->format('M d, Y H:i') }}
+                                </p>
+                                <p class="mt-2">{{ $comment->content }}</p>
+
+                                @can('delete', $comment)
+                                    <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="mt-2">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 text-sm">Delete</button>
+                                    </form>
+                                @endcan
+                            </div>
+                        @endforeach
+                    </div>
+
+                    @if(auth()->check())
+                        <form action="{{ route('comments.store', $article) }}" method="POST" class="mt-6">
+                            @csrf
+                            <textarea name="content" rows="3" class="w-full border rounded p-2" placeholder="Add a comment..." required></textarea>
+                            <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+                        </form>
+                    @else
+                        <p class="mt-4 text-gray-500">Please <a href="{{ route('login') }}" class="text-blue-500 underline">log in</a> to post a comment.</p>
+                    @endif
+                </div>   
             </div>
         </div>
     </div>

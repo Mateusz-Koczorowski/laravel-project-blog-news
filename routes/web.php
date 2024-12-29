@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -97,4 +98,9 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/articles/{article}/like', [LikeController::class, 'toggle'])->name('articles.like');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->middleware('role:Admin')->name('comments.destroy');
 });

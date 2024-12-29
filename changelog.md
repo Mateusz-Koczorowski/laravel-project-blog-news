@@ -1,8 +1,15 @@
 # Changelog
 
-## [0.0.4] - 2024-12-29
+## [0.0.6] - 2024-12-29
+
+- Implement commenting posts
+- Show number of comments on home page
+- Implement policies to let admin delete comments
+
+## [0.0.5] - 2024-12-29
 
 - Implement liking posts
+
 ## [0.0.4] - 2024-12-28
 
 - Implement subscription model and controller
