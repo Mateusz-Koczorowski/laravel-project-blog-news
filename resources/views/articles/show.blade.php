@@ -1,17 +1,18 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ $article->title }}
-        </h2>
-    </x-slot>
-  
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+
                     <!-- Display Article Image -->
-                    <img src="{{ asset('storage/' . $article->image_file_name) }}" alt="{{ $article->alt_text }}" class="w-full h-64 object-cover mb-6">
+                    <img src="{{ asset('storage/' . $article->image_file_name) }}" alt="{{ $article->alt_text }}" class="max-w-6xl h-64 object-cover mb-6">
   
+                    <div class="mb-6">
+                        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                            {{ $article->title }}
+                        </h2>
+                    </div>
+
                     <!-- Author and Date -->
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
                         By {{ $article->author->name ?? 'Unknown' }} on {{ $article->release_date->format('M d, Y') }}
@@ -19,14 +20,12 @@
   
                     <!-- Free Content -->
                     <div class="mb-6">
-                        <h3 class="text-lg font-bold">Free Content</h3>
-                        <p>{{ $article->free_content }}</p>
+                        <h3 class="text-lg font-bold">{{ $article->free_content }}</h3>
                     </div>
   
                     <!-- Premium Content Logic -->
                     @if($article->premium_content)
                         <div>
-                            <h3 class="text-lg font-bold">Premium Content</h3>
                             @if(auth()->check() && (auth()->user()->isAuthor() || auth()->user()->isAdmin() || auth()->user()->hasActiveSubscription()))
                                 <!-- Full Premium Content -->
                                 <p>{{ $article->premium_content }}</p>
@@ -86,16 +85,16 @@
 
                         @foreach ($article->comments as $comment)
                             <div class="mt-4 p-4 bg-gray-100 rounded">
-                                <p class="text-sm text-gray-600">
+                                <p class="text-sm text-gray-900">
                                     <strong>{{ $comment->user->name }}</strong> - {{ $comment->created_at->format('M d, Y H:i') }}
                                 </p>
-                                <p class="mt-2">{{ $comment->content }}</p>
+                                <p class="mt-2 text-gray-900">{{ $comment->content }}</p>
 
                                 @can('delete', $comment)
-                                    <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="mt-2">
+                                    <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="mt-2 text-gray-900">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-500 text-sm">Delete</button>
+                                        <button type="submit" class="bg-gray-200 max-w-8 border-2 border-red-500 rounded p-2  text-sm"><img src="{{ asset('icons/delete.png') }}" class="w-6 h-6" style="margin-right: 0.5rem;"></button>
                                     </form>
                                 @endcan
                             </div>
@@ -105,8 +104,9 @@
                     @if(auth()->check())
                         <form action="{{ route('comments.store', $article) }}" method="POST" class="mt-6">
                             @csrf
-                            <textarea name="content" rows="3" class="w-full border rounded p-2" placeholder="Add a comment..." required></textarea>
-                            <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+                            <textarea name="content" rows="3" class="w-full border rounded p-2 text-gray-900" placeholder="Add a comment..." required></textarea>
+                            <button type="submit" class="border border-white bg-gray-500 text-white px-4 py-2 rounded mt-2 hover:bg-gray-600">Post Comment</button>
+
                         </form>
                     @else
                         <p class="mt-4 text-gray-500">Please <a href="{{ route('login') }}" class="text-blue-500 underline">log in</a> to post a comment.</p>
