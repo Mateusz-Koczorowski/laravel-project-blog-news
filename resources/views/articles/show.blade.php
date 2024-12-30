@@ -86,13 +86,13 @@
 
                         @foreach ($article->comments as $comment)
                             <div class="mt-4 p-4 bg-gray-100 rounded">
-                                <p class="text-sm text-gray-600">
+                                <p class="text-sm text-gray-900">
                                     <strong>{{ $comment->user->name }}</strong> - {{ $comment->created_at->format('M d, Y H:i') }}
                                 </p>
-                                <p class="mt-2">{{ $comment->content }}</p>
+                                <p class="mt-2 text-gray-900">{{ $comment->content }}</p>
 
                                 @can('delete', $comment)
-                                    <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="mt-2">
+                                    <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="mt-2 text-gray-900">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-500 text-sm">Delete</button>
@@ -105,8 +105,11 @@
                     @if(auth()->check())
                         <form action="{{ route('comments.store', $article) }}" method="POST" class="mt-6">
                             @csrf
-                            <textarea name="content" rows="3" class="w-full border rounded p-2" placeholder="Add a comment..." required></textarea>
-                            <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+                            <textarea name="content" rows="3" class="w-full border rounded p-2 text-gray-900" placeholder="Add a comment..." required></textarea>
+                            <button 
+                            type="submit" 
+                            class="mt-2 px-6 py-2 bg-gray-200 text-white font-bold rounded-lg shadow-md hover:bg-blue-600 hover:shadow-lg transition duration-300 ease-in-out"
+                        >Post Comment</button>
                         </form>
                     @else
                         <p class="mt-4 text-gray-500">Please <a href="{{ route('login') }}" class="text-blue-500 underline">log in</a> to post a comment.</p>
