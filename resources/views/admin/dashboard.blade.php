@@ -26,7 +26,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="font-semibold text-lg">Manage Users</h2>
-                        <a href="{{ route('admin.create') }}" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md">
+                        <a href="{{ route('admin.create') }}" class="px-4 py-2 bg-gray-900 text-white border border-white rounded-lg shadow-md hover:bg-gray-700 transition">
                             Create User
                         </a>
                     </div>
@@ -44,14 +44,14 @@
                             </thead>
                             <tbody class="text-gray-600 dark:text-gray-300 text-sm">
                                 @foreach($users as $user)
-                                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-150">
+                                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 transition-all duration-150">
                                         <td class="py-4 px-6 border border-gray-300 dark:border-gray-600">{{ $user->id }}</td>
                                         <td class="py-4 px-6 border border-gray-300 dark:border-gray-600">{{ $user->name }}</td>
                                         <td class="py-4 px-6 border border-gray-300 dark:border-gray-600">{{ $user->email }}</td>
                                         <td class="py-4 px-6 border border-gray-300 dark:border-gray-600">{{ $user->role }}</td>
                                         <td class="py-4 px-6 border border-gray-300 dark:border-gray-600 text-center flex gap-2 justify-center">
-                                            <a href="{{ route('admin.edit', $user->id) }}" class="px-3 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-600 transition">
-                                                Edit
+                                            <a href="{{ route('admin.edit', $user->id) }}" class="px-3 py-2 text-yellow-500 bg-yellow-500 rounded hover:bg-yellow-600 transition hover:text-gray-900">
+                                                Show data/Edit
                                             </a>
                                             <form action="{{ route('admin.destroy', $user->id) }}" method="POST" class="inline">
                                                 @csrf
@@ -83,7 +83,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="font-semibold text-lg">Manage Articles</h2>
-                        <a href="{{ route('articles.create') }}" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md">
+                        <a href="{{ route('articles.create') }}" class="px-4 py-2 bg-gray-900 text-white border border-white rounded-lg shadow-md hover:bg-gray-700 transition">
                             Create Article
                         </a>
                     </div>
@@ -99,20 +99,19 @@
                             </thead>
                             <tbody class="text-gray-600 dark:text-gray-300 text-sm">
                                 @foreach ($articles as $article)
-                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-gray-700 transition-all duration-150">
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 transition-all duration-150">
                                     <td class="py-4 px-6 border border-gray-300 dark:border-gray-600">{{ $article->title }}</td>
                                     <td class="py-4 px-6 border border-gray-300 dark:border-gray-600">{{ optional($article->author)->name }}</td>
                                     <td class="py-4 px-6 border border-gray-300 dark:border-gray-600 text-center flex gap-2 justify-center">
-                                        <!-- Correct Edit Button -->
-                                        <a href="{{ route('articles.edit', $article) }}" class="px-3 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-600 transition">
-                                            Edit
+                                        <a href="{{ route('articles.edit', $article) }}"class="px-3 py-2 text-yellow-500 bg-yellow-500 rounded hover:bg-yellow-600 transition hover:text-gray-900">
+                                            Show data/Edit
                                         </a>
                             
                                         <!-- Correct Delete Button -->
                                         <form action="{{ route('articles.destroy', $article) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="px-3 py-2 text-white bg-red-500 rounded hover:bg-red-600 transition">
+                                            <button type="submit" class="px-3 py-2 text-white bg-red-500 rounded hover:bg-red-600 transition" sty>
                                                 Delete
                                             </button>
                                         </form>
@@ -153,7 +152,7 @@
                             </thead>
                             <tbody class="text-gray-600 dark:text-gray-300 text-sm">
                                 @foreach ($subscriptions as $subscription)
-                                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-150">
+                                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 transition-all duration-150">
                                         <td class="py-4 px-6 border border-gray-300 dark:border-gray-600">{{ $subscription->user->name }}</td>
                                         <td class="py-4 px-6 border border-gray-300 dark:border-gray-600">{{ $subscription->start_date->format('Y-m-d') }}</td>
                                         <td class="py-4 px-6 border border-gray-300 dark:border-gray-600">{{ $subscription->end_date->format('Y-m-d') }}</td>
@@ -162,7 +161,7 @@
                                             @if ($subscription->status === 'pending')
                                                 <form action="{{ route('admin.subscriptions.approve', $subscription->id) }}" method="POST" class="inline">
                                                     @csrf
-                                                    <button type="submit" class="px-3 py-2 text-white bg-green-500 rounded hover:bg-green-600 transition">
+                                                    <button type="submit" class="px-3 py-2 text-yellow-500 bg-yellow-500 rounded hover:bg-yellow-600 transition hover:text-gray-900">
                                                         Approve
                                                     </button>
                                                 </form>
