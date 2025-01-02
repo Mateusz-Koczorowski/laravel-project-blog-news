@@ -10,7 +10,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::latest()->with('author')->paginate(11);
+        $articles = Article::latest()->with('author')->paginate(10);
         return view('articles.index', compact('articles'));
     }
 

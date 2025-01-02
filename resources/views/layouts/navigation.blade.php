@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-slate-200 opacity-85 dark:bg-sky-950 border-b border-gray-100 dark:border-gray-700 relative z-50">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl max-h-32 mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -50,14 +50,23 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="flex items-center space-x-4">
+                    <label for="dark-mode-toggle" class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="dark-mode-toggle" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:peer-checked:bg-gray-900"></div>
+                        <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Dark Mode</span>
+                    </label>
+                </div>
+                
+
+                <div class="space-x-8 mr-5 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link >
                     <div id="live-clock" class="text-gray-700 dark:text-gray-300 text-sm font-medium"></div>
                 </x-nav-link>
                 </div>
 
                 @if (Auth::check())
-                    <x-dropdown align="right" width="48">
+                    <x-dropdown align="right" width="48" class="z-50">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                 <div>{{ Auth::user()->name }}</div>
@@ -97,7 +106,7 @@
             </div>
 
             <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
+            <div class="-me-2 flex items-center sm:hidden z-99">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />

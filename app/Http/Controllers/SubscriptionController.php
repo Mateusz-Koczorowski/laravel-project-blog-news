@@ -28,6 +28,22 @@ class SubscriptionController extends Controller
 
         $start_date = Carbon::parse($validated['start_date']);
         $end_date = Carbon::parse($validated['end_date']);
+
+        // Check for overlapping subscriptions
+        $overlappingSubscription = Subscription::where('user_id', auth()->id())
+            ->where(function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('start_date', [$start_date, $end_date])
+                      ->orWhereBetween('end_date', [$start_date, $end_date])
+                      ->orWhere(function ($query) use ($start_date, $end_date) {
+                          $query->where('start_date', '<=', $start_date)
+                                ->where('end_date', '>=', $end_date);
+                      });
+            })->first();
+
+        if ($overlappingSubscription) {
+            return redirect()->back()->withErrors(['dates' => 'The selected dates overlap with an existing subscription.']);
+        }
+
         $days = $start_date->diffInDays($end_date);
         $price = $days * 0.50; // $0.50 per day
 
@@ -42,10 +58,28 @@ class SubscriptionController extends Controller
             'price' => 'required|numeric|min:0',
         ]);
 
+        $start_date = Carbon::parse($validated['start_date']);
+        $end_date = Carbon::parse($validated['end_date']);
+
+        // Check for overlapping subscriptions
+        $overlappingSubscription = Subscription::where('user_id', auth()->id())
+            ->where(function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('start_date', [$start_date, $end_date])
+                      ->orWhereBetween('end_date', [$start_date, $end_date])
+                      ->orWhere(function ($query) use ($start_date, $end_date) {
+                          $query->where('start_date', '<=', $start_date)
+                                ->where('end_date', '>=', $end_date);
+                      });
+            })->first();
+
+        if ($overlappingSubscription) {
+            return redirect()->back()->withErrors(['dates' => 'The selected dates overlap with an existing subscription.']);
+        }
+
         Subscription::create([
             'user_id' => auth()->id(),
-            'start_date' => Carbon::parse($validated['start_date']),
-            'end_date' => Carbon::parse($validated['end_date']),
+            'start_date' => $start_date,
+            'end_date' => $end_date,
             'price' => $validated['price'],
             'status' => 'pending', // Initial status is pending
         ]);

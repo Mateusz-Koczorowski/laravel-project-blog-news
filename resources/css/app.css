@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#dark-mode-toggle {
+  transition: background-color 0.7s ease, color 0.7s ease;
+}
