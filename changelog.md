@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.7] - 2024-12-30
+
+- Change redirect after login to /
+- Improve styles of default app file
+- Improve styles of index articles
+- Improve styles of show articles
+- Implement footer
+
 ## [0.0.6] - 2024-12-29
 
 - Implement commenting posts

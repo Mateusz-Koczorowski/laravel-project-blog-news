@@ -11,12 +11,12 @@ use App\Models\Subscription;
 
 class AdminDashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10); // Dodano paginację
-        $articles = Article::with('author')->paginate(10); // Dodano paginację i ładowanie relacji
-        $subscriptions = Subscription::latest()->paginate(10);
-
+        $users = User::paginate(10, ['*'], 'users_page');
+        $articles = Article::paginate(10, ['*'], 'articles_page');
+        $subscriptions = Subscription::paginate(10, ['*'], 'subscriptions_page');
+    
         return view('admin.dashboard', compact('users', 'articles', 'subscriptions'));
     }
 
@@ -166,5 +166,10 @@ class AdminDashboardController extends Controller
         $subscription->update(['status' => 'rejected']);
 
         return redirect()->route('admin.dashboard')->with('success', 'Subscription rejected successfully.');
+    }
+
+    public function show(User $user)
+    {
+        return view('admin.users.show', compact('user'));
     }
 }
