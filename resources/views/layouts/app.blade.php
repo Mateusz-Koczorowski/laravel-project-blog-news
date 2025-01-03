@@ -18,10 +18,10 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased text-gray-800 dark:text-gray-100">
-        <div class="min-h-screen" 
+        <div class="flex flex-col min-h-screen" 
              style="background-image: url('{{ asset('background/background.png') }}'); background-size: cover; background-position: center; background-attachment: fixed;">
             @include('layouts.navigation')
-
+    
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-slate-200/90 dark:bg-gray-800/90 shadow">
@@ -30,12 +30,12 @@
                     </div>
                 </header>
             @endif
-
+    
             <!-- Page Content -->
-            <main class="bg-slate-100/10 dark:bg-sky-950/80 backdrop-blur-md p-6">
+            <main class="flex-grow bg-slate-100/10 dark:bg-sky-950/80 backdrop-blur-md p-6">
                 {{ $slot }}
             </main>
-
+    
             @include('layouts.footer')
         </div>
     </body>
