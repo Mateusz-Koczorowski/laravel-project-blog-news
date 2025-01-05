@@ -84,7 +84,7 @@ class SubscriptionController extends Controller
             'status' => 'pending', // Initial status is pending
         ]);
 
-        return redirect()->route('subscriptions.index')->with('success', 'Subscription request submitted. Awaiting admin approval.');
+        return redirect()->route('subscriptions.thank-you')->with('success', 'Subscription request submitted. Awaiting admin approval.');
     }
 
     public function summary(Request $request)

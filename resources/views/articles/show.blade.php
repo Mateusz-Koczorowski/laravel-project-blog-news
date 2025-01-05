@@ -7,7 +7,7 @@
                     <!-- Display Article Image -->
                     <img src="{{ asset('storage/' . $article->image_file_name) }}" 
                          alt="{{ $article->alt_text }}" 
-                         class="w-full h-64 object-cover sm:rounded-lg mb-6">
+                         class="w-full h-auto object-center sm:rounded-lg mb-6">
 
                     <!-- Article Title -->
                     <h2 class="font-bold text-2xl text-gray-800 dark:text-gray-100 mb-4">

@@ -10,7 +10,7 @@
                     <a href="{{ route('articles.show', $latestArticle) }}">
                         <img src="{{ asset('storage/' . $latestArticle->image_file_name) }}" 
                              alt="{{ $latestArticle->alt_text }}" 
-                             class="w-full h-64 object-cover sm:rounded-t-lg">
+                             class="w-full h-auto object-center sm:rounded-t-lg">
                     </a>
                     <div class="p-6">
                         <a href="{{ route('articles.show', $latestArticle) }}">
